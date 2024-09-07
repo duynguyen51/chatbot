@@ -1,0 +1,208 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Schema for airline flight statistics and delay ratings",
+  "properties": {
+    "AirlineStats": {
+      "type": "array",
+      "description": "An array of flight information for multiple flights",
+      "items": {
+        "type": "object",
+        "description": "Information about a specific flight",
+        "properties": {
+          "airlinecode": {
+            "type": "string",
+            "description": "The code of the airline operating the flight"
+          },
+          "airlinename": {
+            "type": "string",
+            "description": "The name of the airline operating the flight"
+          },
+          "destination": {
+            "type": "object",
+            "description": "Information about the flight's destination",
+            "properties": {
+              "airportcode": {
+                "type": "string",
+                "description": "The code of the destination airport"
+              },
+              "airportname": {
+                "type": "string",
+                "description": "The name of the destination airport"
+              },
+              "city": {
+                "type": "string",
+                "description": "The city where the destination airport is located"
+              },
+              "country": {
+                "type": "string",
+                "description": "The country where the destination airport is located"
+              },
+              "offset": {
+                "type": "integer",
+                "description": "The time offset in seconds for the destination timezone"
+              }
+            },
+            "required": ["airportcode", "airportname", "city", "country", "offset"]
+          },
+          "flightid": {
+            "type": "string",
+            "description": "The unique identifier for the flight"
+          },
+          "flightstatus": {
+            "type": "object",
+            "description": "Information about the flight's status and timings",
+            "properties": {
+              "duration": {
+                "type": "integer",
+                "description": "The actual duration of the flight in seconds"
+              },
+              "estimated": {
+                "type": "object",
+                "description": "Estimated arrival and departure times",
+                "properties": {
+                  "arrival": {
+                    "type": "string",
+                    "description": "Estimated arrival time (empty if not applicable)"
+                  },
+                  "departure": {
+                    "type": "string",
+                    "description": "Estimated departure time (empty if not applicable)"
+                  }
+                },
+                "required": ["arrival", "departure"]
+              },
+              "real": {
+                "type": "object",
+                "description": "Actual arrival and departure times",
+                "properties": {
+                  "arrival": {
+                    "type": "integer",
+                    "description": "Actual arrival time in Unix timestamp"
+                  },
+                  "departure": {
+                    "type": "integer",
+                    "description": "Actual departure time in Unix timestamp"
+                  }
+                },
+                "required": ["arrival", "departure"]
+              },
+              "scheduled": {
+                "type": "object",
+                "description": "Scheduled arrival and departure times",
+                "properties": {
+                  "arrival": {
+                    "type": "integer",
+                    "description": "Scheduled arrival time in Unix timestamp"
+                  },
+                  "departure": {
+                    "type": "integer",
+                    "description": "Scheduled departure time in Unix timestamp"
+                  }
+                },
+                "required": ["arrival", "departure"]
+              },
+              "status": {
+                "type": "string",
+                "description": "Current status of the flight (e.g., 'Landed 19:43')"
+              }
+            },
+            "required": ["duration", "estimated", "real", "scheduled", "status"]
+          },
+          "origin": {
+            "type": "object",
+            "description": "Information about the flight's origin",
+            "properties": {
+              "airportcode": {
+                "type": "string",
+                "description": "The code of the origin airport"
+              },
+              "airportname": {
+                "type": "string",
+                "description": "The name of the origin airport"
+              },
+              "city": {
+                "type": "string",
+                "description": "The city where the origin airport is located"
+              },
+              "country": {
+                "type": "string",
+                "description": "The country where the origin airport is located"
+              },
+              "offset": {
+                "type": "integer",
+                "description": "The time offset in seconds for the origin timezone"
+              }
+            },
+            "required": ["airportcode", "airportname", "city", "country", "offset"]
+          }
+        },
+        "required": ["airlinecode", "airlinename", "destination", "flightid", "flightstatus", "origin"]
+      }
+    },
+    "DelayRatings": {
+      "type": "object",
+      "description": "Statistics and ratings related to flight delays",
+      "properties": {
+        "delayGreaterThanNinety": {
+          "type": "number",
+          "description": "Percentage of flights delayed more than 90 minutes"
+        },
+        "delayGreaterThanTwenty": {
+          "type": "number",
+          "description": "Percentage of flights delayed more than 20 minutes"
+        },
+        "earlyorbeforeAvginMins": {
+          "type": "number",
+          "description": "Average number of minutes flights are early or on time"
+        },
+        "earlyorbeforesDevinMins": {
+          "type": "number",
+          "description": "Standard deviation of early or on-time arrivals in minutes"
+        },
+        "flightStatusCanceled": {
+          "type": "number",
+          "description": "Percentage of flights that were canceled"
+        },
+        "meanDelay": {
+          "type": "number",
+          "description": "Average delay time in minutes"
+        },
+        "medianDelay": {
+          "type": "number",
+          "description": "Median delay time in minutes"
+        },
+        "modeDelay": {
+          "type": "number",
+          "description": "Most common delay time in minutes"
+        },
+        "punctPercent": {
+          "type": "number",
+          "description": "Percentage of flights that were on time"
+        },
+        "rating": {
+          "type": "number",
+          "description": "Overall rating based on delay statistics"
+        },
+        "riskfactor": {
+          "type": "string",
+          "description": "Risk factor category based on delay statistics"
+        }
+      },
+      "required": [
+        "delayGreaterThanNinety",
+        "delayGreaterThanTwenty",
+        "earlyorbeforeAvginMins",
+        "earlyorbeforesDevinMins",
+        "flightStatusCanceled",
+        "meanDelay",
+        "medianDelay",
+        "modeDelay",
+        "punctPercent",
+        "rating",
+        "riskfactor"
+      ]
+    }
+  },
+  "required": ["AirlineStats", "DelayRatings"]
+}
