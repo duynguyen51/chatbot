@@ -19,3 +19,5 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
+## Report
+https://docs.google.com/document/d/1C8694vo3hELvuP5B-uGB6478V5MFZKTDtJ5rrov6dkM/edit?usp=sharing
